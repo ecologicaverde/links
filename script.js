@@ -63,7 +63,8 @@
             url: 'https://ecologica2verde.online/',
             icon: 'fa-globe',
             styleClass: 'website',
-            hasFollowers: false
+            hasFollowers: false,
+            useFavicon: true
         },
         {
             name: 'Twitter / X',
@@ -137,8 +138,8 @@
         }
 
         var iconHtml = '';
-        if (link.useLogoIcon) {
-            iconHtml = '<img src="assets/logo/logo.png" alt="Ecológica Verde">';
+        if (link.useFavicon) {
+            iconHtml = '<img src="assets/logo/favicon.png" alt="Ecológica Verde">';
         } else {
             iconHtml = '<i class="fa-brands ' + link.icon + '"></i>';
         }
