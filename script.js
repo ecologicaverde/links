@@ -18,7 +18,7 @@
     var translations = {
         pt: {
             title: 'Ecológica Verde',
-            subtitle: 'ᴅɪᴠᴜʟɢᴀɴᴅᴏ ᴄᴏɪsᴀs “ᴄᴏᴍᴘʀᴀᴅᴀs” ᴇᴄᴏʟᴏɢɪᴄᴀᴍᴇɴᴛᴇ.',
+            subtitle: 'Divulgando coisas "compradas" ecologicamente.',
             nonprofit: 'Projeto sem fins lucrativos',
             copyLink: 'Copiar Link',
             whatsapp: 'WhatsApp',
@@ -41,7 +41,7 @@
         },
         en: {
             title: 'Ecológica Verde',
-            subtitle: 'SHARING ECOLOGICALLY "PURCHASED" THINGS.',
+            subtitle: 'Sharing ecologically "purchased" things.',
             nonprofit: 'Non-profit project',
             copyLink: 'Copy Link',
             whatsapp: 'WhatsApp',
@@ -64,7 +64,7 @@
         },
         es: {
             title: 'Ecológica Verde',
-            subtitle: 'COMPARTIENDO COSAS "COMPRADAS" ECOLÓGICAMENTE.',
+            subtitle: 'Compartiendo cosas "compradas" ecológicamente.',
             nonprofit: 'Proyecto sin fines de lucro',
             copyLink: 'Copiar Enlace',
             whatsapp: 'WhatsApp',
@@ -87,7 +87,7 @@
         },
         ru: {
             title: 'Ecológica Verde',
-            subtitle: 'ДЕЛИМСЯ ЭКОЛОГИЧЕСКИ "ПРИОБРЕТЕННЫМИ" ВЕЩАМИ.',
+            subtitle: 'Делимся экологически "приобретенными" вещами.',
             nonprofit: 'Некоммерческий проект',
             copyLink: 'Копировать ссылку',
             whatsapp: 'WhatsApp',
