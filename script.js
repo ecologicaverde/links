@@ -63,7 +63,8 @@
             url: 'https://ecologica2verde.online/',
             icon: 'fa-globe',
             styleClass: 'website',
-            hasFollowers: false
+            hasFollowers: false,
+            useFavicon: true
         },
         {
             name: 'Twitter / X',
@@ -136,7 +137,12 @@
                         formatNumber(followersData[link.key]) + ' ' + label + '</span>';
         }
 
-        var iconHtml = '<i class="fa-brands ' + link.icon + '"></i>';
+        var iconHtml = '';
+        if (link.useFavicon) {
+            iconHtml = '<img src="assets/logo/favicon.png" alt="Site">';
+        } else {
+            iconHtml = '<i class="fa-brands ' + link.icon + '"></i>';
+        }
 
         a.innerHTML =
             '<div class="link-left">' +
@@ -202,9 +208,47 @@
         xhr.send();
     }
 
+    function initMusicPlayer() {
+        var audio = new Audio('assets/music/OST.m4a');
+        audio.loop = true;
+        var isPlaying = false;
+        var toggleBtn = document.getElementById('musicToggle');
+        if (!toggleBtn) return;
+
+        function updateButtonState() {
+            if (isPlaying) {
+                toggleBtn.classList.add('on');
+                toggleBtn.classList.remove('off');
+                toggleBtn.querySelector('.toggle-status').textContent = 'ON';
+                toggleBtn.querySelector('.toggle-icon').className = 'fas fa-volume-up toggle-icon';
+            } else {
+                toggleBtn.classList.add('off');
+                toggleBtn.classList.remove('on');
+                toggleBtn.querySelector('.toggle-status').textContent = 'OFF';
+                toggleBtn.querySelector('.toggle-icon').className = 'fas fa-volume-mute toggle-icon';
+            }
+        }
+
+        toggleBtn.addEventListener('click', function() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+            } else {
+                audio.play().catch(function(err) {
+                    console.log('Autoplay bloqueado:', err);
+                });
+                isPlaying = true;
+            }
+            updateButtonState();
+        });
+
+        updateButtonState();
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         createParticles();
         updateTotalDisplay();
         loadFollowers();
+        initMusicPlayer();
     });
 })();
