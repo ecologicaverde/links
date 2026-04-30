@@ -73,7 +73,9 @@
             icon: 'fa-x-twitter',
             styleClass: 'twitter',
             hasFollowers: true,
-            key: 'twitter'
+            key: 'twitter',
+            useImageIcon: true,
+            imageIconSrc: 'assets/logos/twitter.png'
         },
         {
             name: 'Threads',
@@ -82,7 +84,9 @@
             icon: 'fa-threads',
             styleClass: 'threads',
             hasFollowers: true,
-            key: 'threads'
+            key: 'threads',
+            useImageIcon: true,
+            imageIconSrc: 'assets/logos/threads.png'
         },
         {
             name: 'TikTok',
@@ -140,6 +144,8 @@
         var iconHtml = '';
         if (link.useLogoIcon) {
             iconHtml = '<img src="assets/logo/logo.png" alt="Ecológica Verde">';
+        } else if (link.useImageIcon) {
+            iconHtml = '<img src="' + link.imageIconSrc + '" alt="' + link.name + '">';
         } else {
             iconHtml = '<i class="fa-brands ' + link.icon + '"></i>';
         }
