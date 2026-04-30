@@ -63,8 +63,7 @@
             url: 'https://ecologica2verde.online/',
             icon: 'fa-globe',
             styleClass: 'website',
-            hasFollowers: false,
-            useLogoIcon: true
+            hasFollowers: false
         },
         {
             name: 'Twitter / X',
@@ -73,20 +72,16 @@
             icon: 'fa-x-twitter',
             styleClass: 'twitter',
             hasFollowers: true,
-            key: 'twitter',
-            useImageIcon: true,
-            imageIconSrc: 'assets/logo/twitter.webp'
+            key: 'twitter'
         },
         {
-            name: '',
+            name: 'Threads',
             username: '@ecologicaverde',
-            url: 'https://www..net/@ecologicaverde',
+            url: 'https://www.threads.com/@ecologicaverde',
             icon: 'fa-threads',
             styleClass: 'threads',
             hasFollowers: true,
-            key: 'threads',
-            useImageIcon: true,
-            imageIconSrc: 'assets/logo/threads.png'
+            key: 'threads'
         },
         {
             name: 'TikTok',
@@ -144,8 +139,6 @@
         var iconHtml = '';
         if (link.useLogoIcon) {
             iconHtml = '<img src="assets/logo/logo.png" alt="Ecológica Verde">';
-        } else if (link.useImageIcon) {
-            iconHtml = '<img src="' + link.imageIconSrc + '" alt="' + link.name + '">';
         } else {
             iconHtml = '<i class="fa-brands ' + link.icon + '"></i>';
         }

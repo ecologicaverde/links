@@ -305,39 +305,15 @@ body {
 }
 
 .icon-box.website {
-    background: transparent;
-    overflow: hidden;
-}
-
-.icon-box.website img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 10px;
+    background: linear-gradient(135deg, #2d5a27, #1a3a16);
 }
 
 .icon-box.twitter {
-    background: transparent;
-    overflow: hidden;
-}
-
-.icon-box.twitter img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 10px;
+    background: #000000;
 }
 
 .icon-box.threads {
-    background: transparent;
-    overflow: hidden;
-}
-
-.icon-box.threads img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 10px;
+    background: #000000;
 }
 
 .icon-box.tiktok {
