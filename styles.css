@@ -17,7 +17,7 @@ body {
     justify-content: center;
     background-color: #0a1a0f;
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
     color: #ffffff;
     padding: 12px;
 }
@@ -418,8 +418,8 @@ body {
     transform: translateX(0);
 }
 
-.total-stats {
-    text-align: center;
+.share-section {
+    margin-top: 20px;
     margin-bottom: 18px;
     padding: 12px;
     background: rgba(139, 195, 74, 0.06);
@@ -427,27 +427,55 @@ body {
     border: 1px solid rgba(107, 175, 90, 0.12);
 }
 
-.stats-inner {
+.share-section-title {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 12px;
 }
 
-.stats-inner i {
+.share-section-title i {
+    font-size: 0.7rem;
     color: #4caf50;
-    font-size: 0.85rem;
 }
 
-.stats-inner span:first-of-type {
-    font-size: 1.05rem;
-    font-weight: 700;
+.share-buttons-horizontal {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.share-action-btn-horizontal {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(74, 140, 63, 0.3);
+    border-radius: 20px;
+    padding: 8px 16px;
     color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
 }
 
-.stats-text {
-    font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.45);
+.share-action-btn-horizontal:hover {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: #4caf50;
+    transform: translateY(-2px);
+}
+
+.share-action-btn-horizontal i {
+    font-size: 0.85rem;
 }
 
 .footer-text {
@@ -714,45 +742,6 @@ body {
     border-radius: 20px;
 }
 
-.music-panel-divider {
-    height: 1px;
-    background: rgba(74, 140, 63, 0.3);
-    margin: 4px 0;
-}
-
-.share-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.share-action-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(74, 140, 63, 0.3);
-    border-radius: 12px;
-    padding: 8px 12px;
-    color: #ffffff;
-    font-size: 0.75rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: inherit;
-}
-
-.share-action-btn:hover {
-    background: rgba(76, 175, 80, 0.2);
-    border-color: #4caf50;
-    transform: translateX(2px);
-}
-
-.share-action-btn i {
-    font-size: 0.9rem;
-    width: 20px;
-}
-
 .qr-modal {
     display: none;
     position: fixed;
@@ -845,6 +834,15 @@ body {
     
     .language-dropdown {
         min-width: 120px;
+    }
+    
+    .share-buttons-horizontal {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .share-action-btn-horizontal {
+        justify-content: center;
     }
     
     .toast-message {

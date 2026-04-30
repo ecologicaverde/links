@@ -19,7 +19,6 @@
         pt: {
             title: 'Ecológica Verde',
             subtitle: 'ᴅɪᴠᴜʟɢᴀɴᴅᴏ ᴄᴏɪsᴀs “ᴄᴏᴍᴘʀᴀᴅᴀs” ᴇᴄᴏʟᴏɢɪᴄᴀᴍᴇɴᴛᴇ.',
-            totalFollowers: 'Total de Seguidores',
             nonprofit: 'Projeto sem fins lucrativos',
             copyLink: 'Copiar Link',
             whatsapp: 'WhatsApp',
@@ -37,12 +36,12 @@
             members: 'membros',
             followers: 'seguidores',
             musicSection: 'Música',
+            shareSection: 'Compartilhar',
             languageName: 'Português'
         },
         en: {
             title: 'Ecológica Verde',
             subtitle: 'SHARING ECOLOGICALLY "PURCHASED" THINGS.',
-            totalFollowers: 'Total Followers',
             nonprofit: 'Non-profit project',
             copyLink: 'Copy Link',
             whatsapp: 'WhatsApp',
@@ -60,12 +59,12 @@
             members: 'members',
             followers: 'followers',
             musicSection: 'Music',
+            shareSection: 'Share',
             languageName: 'English'
         },
         es: {
             title: 'Ecológica Verde',
             subtitle: 'COMPARTIENDO COSAS "COMPRADAS" ECOLÓGICAMENTE.',
-            totalFollowers: 'Total de Seguidores',
             nonprofit: 'Proyecto sin fines de lucro',
             copyLink: 'Copiar Enlace',
             whatsapp: 'WhatsApp',
@@ -83,12 +82,12 @@
             members: 'miembros',
             followers: 'seguidores',
             musicSection: 'Música',
+            shareSection: 'Compartir',
             languageName: 'Español'
         },
         ru: {
             title: 'Ecológica Verde',
             subtitle: 'ДЕЛИМСЯ ЭКОЛОГИЧЕСКИ "ПРИОБРЕТЕННЫМИ" ВЕЩАМИ.',
-            totalFollowers: 'Всего подписчиков',
             nonprofit: 'Некоммерческий проект',
             copyLink: 'Копировать ссылку',
             whatsapp: 'WhatsApp',
@@ -106,6 +105,7 @@
             members: 'участников',
             followers: 'подписчиков',
             musicSection: 'Музыка',
+            shareSection: 'Поделиться',
             languageName: 'Русский'
         }
     };
@@ -191,27 +191,10 @@
         return n.toLocaleString('pt-BR');
     }
 
-    function sumFollowers() {
-        var total = 0;
-        var keys = Object.keys(followersData);
-        for (var i = 0; i < keys.length; i++) {
-            total += parseInt(followersData[keys[i]], 10) || 0;
-        }
-        return total;
-    }
-
-    function updateTotalDisplay() {
-        var el = document.getElementById('totalFollowers');
-        if (el) {
-            el.textContent = formatNumber(sumFollowers());
-        }
-    }
-
     function updateLanguage() {
         var t = translations[currentLanguage];
         document.getElementById('siteTitle').textContent = t.title;
         document.getElementById('siteSubtitle').textContent = t.subtitle;
-        document.getElementById('totalFollowersText').textContent = t.totalFollowers;
         document.getElementById('nonprofitText').textContent = t.nonprofit;
         document.getElementById('copyLinkText').textContent = t.copyLink;
         document.getElementById('whatsappText').textContent = t.whatsapp;
@@ -219,6 +202,7 @@
         document.getElementById('qrTitle').textContent = t.qrTitle;
         document.getElementById('qrInstruction').textContent = t.qrInstruction;
         document.getElementById('musicSectionTitle').textContent = t.musicSection;
+        document.getElementById('shareSectionTitle').innerHTML = '<i class="fas fa-share-alt"></i><span>' + t.shareSection + '</span>';
         document.getElementById('currentLanguageLabel').textContent = t.languageName;
         
         renderLinks();
@@ -319,17 +303,14 @@
                 } catch (e) {}
             }
             renderLinks();
-            updateTotalDisplay();
         };
 
         xhr.onerror = function() {
             renderLinks();
-            updateTotalDisplay();
         };
 
         xhr.ontimeout = function() {
             renderLinks();
-            updateTotalDisplay();
         };
 
         xhr.send();
@@ -604,7 +585,6 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         createParticles();
-        updateTotalDisplay();
         loadFollowers();
         initMusicPlayer();
         initShareFeatures();
