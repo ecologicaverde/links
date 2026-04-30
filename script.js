@@ -75,7 +75,7 @@
             hasFollowers: true,
             key: 'twitter',
             useImageIcon: true,
-            imageIconSrc: 'assets/logo/twitter.png'
+            imageIconSrc: 'assets/logo/twitter.webp'
         },
         {
             name: '',
