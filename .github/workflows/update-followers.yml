@@ -2,7 +2,7 @@ name: Update Followers Count
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -37,5 +37,5 @@ jobs:
           echo "No changes to commit"
           exit 0
         fi
-        git commit -m "Update followers count [skip ci]"
+        git commit -m "Update followers count"
         git push
