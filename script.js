@@ -12,7 +12,7 @@
     var currentAudio = null;
     var currentSongIndex = 0;
     var isPlaying = true;
-    var playlist = ['OS1.m4a', 'OS2.m4a', 'OS3.m4a', 'OS4.m4a'];
+    var playlist = ['OST1.m4a', 'OST2.m4a', 'OST3.m4a', 'OST4.m4a'];
 
     var translations = {
         pt: {
@@ -36,7 +36,8 @@
             members: 'membros',
             followers: 'seguidores',
             musicSection: 'Música',
-            shareSection: 'Compartilhar'
+            shareSection: 'Compartilhar',
+            languageName: 'Português'
         },
         en: {
             title: 'Ecológica Verde',
@@ -59,7 +60,8 @@
             members: 'members',
             followers: 'followers',
             musicSection: 'Music',
-            shareSection: 'Share'
+            shareSection: 'Share',
+            languageName: 'English'
         },
         es: {
             title: 'Ecológica Verde',
@@ -82,7 +84,8 @@
             members: 'miembros',
             followers: 'seguidores',
             musicSection: 'Música',
-            shareSection: 'Compartir'
+            shareSection: 'Compartir',
+            languageName: 'Español'
         },
         ru: {
             title: 'Ecológica Verde',
@@ -105,7 +108,8 @@
             members: 'участников',
             followers: 'подписчиков',
             musicSection: 'Музыка',
-            shareSection: 'Поделиться'
+            shareSection: 'Поделиться',
+            languageName: 'Русский'
         }
     };
 
@@ -219,6 +223,7 @@
         document.getElementById('qrInstruction').textContent = t.qrInstruction;
         document.getElementById('musicSectionTitle').textContent = t.musicSection;
         document.getElementById('shareSectionTitle').textContent = t.shareSection;
+        document.getElementById('currentLanguageLabel').textContent = t.languageName;
         
         renderLinks();
     }
@@ -347,7 +352,11 @@
         var songPath = 'assets/music/' + playlist[index];
         currentAudio = new Audio(songPath);
         currentAudio.loop = false;
-        currentAudio.volume = document.getElementById('volumeSlider').value / 100;
+        
+        var volumeSlider = document.getElementById('volumeSlider');
+        if (volumeSlider) {
+            currentAudio.volume = volumeSlider.value / 100;
+        }
         
         var nowPlayingSpan = document.getElementById('nowPlaying');
         if (nowPlayingSpan) {
@@ -358,11 +367,6 @@
             var nextIndex = (currentSongIndex + 1) % playlist.length;
             currentSongIndex = nextIndex;
             loadSong(currentSongIndex, isPlaying);
-            if (isPlaying && currentAudio) {
-                currentAudio.play().catch(function(err) {
-                    console.log('Playback bloqueado:', err);
-                });
-            }
         });
         
         if (autoplay && isPlaying) {
@@ -370,8 +374,6 @@
             if (playPromise !== undefined) {
                 playPromise.catch(function(err) {
                     console.log('Autoplay bloqueado:', err);
-                    isPlaying = false;
-                    updateButtonState();
                 });
             }
         }
@@ -432,8 +434,6 @@
                 if (currentAudio) currentAudio.volume = volume;
                 localStorage.setItem('musicVolume', volumeSlider.value);
             });
-            
-            if (currentAudio) currentAudio.volume = volumeSlider.value / 100;
         }
         
         if (toggleBtn) {
@@ -443,9 +443,12 @@
                     isPlaying = false;
                 } else {
                     if (currentAudio) {
-                        currentAudio.play().catch(function(err) {
-                            console.log('Playback bloqueado:', err);
-                        });
+                        var playPromise = currentAudio.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(function(err) {
+                                console.log('Playback bloqueado:', err);
+                            });
+                        }
                     }
                     isPlaying = true;
                 }
