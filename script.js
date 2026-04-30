@@ -230,19 +230,18 @@
             return;
         }
         container.innerHTML = '';
-        for (var i = 0; i < 120; i++) {
+        for (var i = 0; i < 150; i++) {
             var dot = document.createElement('div');
             dot.className = 'particle-dot';
             dot.style.left = Math.random() * 100 + '%';
-            var startY = Math.random() * 40 + 60;
-            dot.style.bottom = startY + '%';
-            var duration = Math.random() * 12 + 10;
+            dot.style.bottom = '-20px';
+            var duration = Math.random() * 15 + 10;
             dot.style.animationDuration = duration + 's';
-            dot.style.animationDelay = Math.random() * 8 + 's';
-            var size = Math.random() * 2.5 + 0.5;
+            dot.style.animationDelay = Math.random() * 12 + 's';
+            var size = Math.random() * 3 + 1;
             dot.style.width = size + 'px';
             dot.style.height = size + 'px';
-            dot.style.opacity = Math.random() * 0.5 + 0.15;
+            dot.style.opacity = Math.random() * 0.5 + 0.3;
             container.appendChild(dot);
         }
     }
