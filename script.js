@@ -34,7 +34,9 @@
             facebook: 'Facebook',
             discord: 'Discord Server',
             members: 'membros',
-            followers: 'seguidores'
+            followers: 'seguidores',
+            musicSection: 'Música',
+            shareSection: 'Compartilhar'
         },
         en: {
             title: 'Ecológica Verde',
@@ -55,7 +57,9 @@
             facebook: 'Facebook',
             discord: 'Discord Server',
             members: 'members',
-            followers: 'followers'
+            followers: 'followers',
+            musicSection: 'Music',
+            shareSection: 'Share'
         },
         es: {
             title: 'Ecológica Verde',
@@ -76,7 +80,9 @@
             facebook: 'Facebook',
             discord: 'Servidor Discord',
             members: 'miembros',
-            followers: 'seguidores'
+            followers: 'seguidores',
+            musicSection: 'Música',
+            shareSection: 'Compartir'
         },
         ru: {
             title: 'Ecológica Verde',
@@ -97,7 +103,9 @@
             facebook: 'Facebook',
             discord: 'Discord сервер',
             members: 'участников',
-            followers: 'подписчиков'
+            followers: 'подписчиков',
+            musicSection: 'Музыка',
+            shareSection: 'Поделиться'
         }
     };
 
@@ -209,6 +217,8 @@
         document.getElementById('qrCodeText').textContent = t.qrCode;
         document.getElementById('qrTitle').textContent = t.qrTitle;
         document.getElementById('qrInstruction').textContent = t.qrInstruction;
+        document.getElementById('musicSectionTitle').textContent = t.musicSection;
+        document.getElementById('shareSectionTitle').textContent = t.shareSection;
         
         renderLinks();
     }
@@ -218,16 +228,19 @@
         if (!container) {
             return;
         }
+        container.innerHTML = '';
         for (var i = 0; i < 50; i++) {
             var dot = document.createElement('div');
             dot.className = 'particle-dot';
             dot.style.left = Math.random() * 100 + '%';
-            dot.style.animationDuration = (Math.random() * 12 + 6) + 's';
-            dot.style.animationDelay = Math.random() * 10 + 's';
-            var size = Math.random() * 2.5 + 0.8;
+            var startY = Math.random() * 30 + 70;
+            dot.style.bottom = startY + '%';
+            dot.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            dot.style.animationDelay = Math.random() * 5 + 's';
+            var size = Math.random() * 2 + 0.8;
             dot.style.width = size + 'px';
             dot.style.height = size + 'px';
-            dot.style.opacity = Math.random() * 0.5 + 0.2;
+            dot.style.opacity = Math.random() * 0.4 + 0.2;
             container.appendChild(dot);
         }
     }
@@ -325,7 +338,7 @@
         return Math.floor(Math.random() * playlist.length);
     }
 
-    function loadSong(index) {
+    function loadSong(index, autoplay = true) {
         if (currentAudio) {
             currentAudio.pause();
             currentAudio = null;
@@ -336,21 +349,52 @@
         currentAudio.loop = false;
         currentAudio.volume = document.getElementById('volumeSlider').value / 100;
         
+        var nowPlayingSpan = document.getElementById('nowPlaying');
+        if (nowPlayingSpan) {
+            nowPlayingSpan.textContent = playlist[index];
+        }
+        
         currentAudio.addEventListener('ended', function() {
             var nextIndex = (currentSongIndex + 1) % playlist.length;
             currentSongIndex = nextIndex;
-            loadSong(currentSongIndex);
-            if (isPlaying) {
+            loadSong(currentSongIndex, isPlaying);
+            if (isPlaying && currentAudio) {
                 currentAudio.play().catch(function(err) {
                     console.log('Playback bloqueado:', err);
                 });
             }
         });
         
+        if (autoplay && isPlaying) {
+            var playPromise = currentAudio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function(err) {
+                    console.log('Autoplay bloqueado:', err);
+                    isPlaying = false;
+                    updateButtonState();
+                });
+            }
+        }
+    }
+
+    function updateButtonState() {
+        var toggleBtn = document.getElementById('musicToggle');
+        if (!toggleBtn) return;
+        
         if (isPlaying) {
-            currentAudio.play().catch(function(err) {
-                console.log('Playback bloqueado:', err);
-            });
+            toggleBtn.classList.add('on');
+            toggleBtn.classList.remove('off');
+            var statusSpan = toggleBtn.querySelector('.toggle-status');
+            var iconI = toggleBtn.querySelector('.toggle-icon');
+            if (statusSpan) statusSpan.textContent = 'ON';
+            if (iconI) iconI.className = 'fas fa-volume-up toggle-icon';
+        } else {
+            toggleBtn.classList.add('off');
+            toggleBtn.classList.remove('on');
+            var statusSpanOff = toggleBtn.querySelector('.toggle-status');
+            var iconIOff = toggleBtn.querySelector('.toggle-icon');
+            if (statusSpanOff) statusSpanOff.textContent = 'OFF';
+            if (iconIOff) iconIOff.className = 'fas fa-volume-mute toggle-icon';
         }
     }
 
@@ -371,73 +415,60 @@
             currentSongIndex = getRandomSong();
         }
         
-        loadSong(currentSongIndex);
+        var volumeSlider = document.getElementById('volumeSlider');
+        if (savedVolume !== null) {
+            volumeSlider.value = savedVolume;
+        }
+        
+        loadSong(currentSongIndex, true);
         
         var toggleBtn = document.getElementById('musicToggle');
-        var volumeSlider = document.getElementById('volumeSlider');
         var prevBtn = document.getElementById('prevBtn');
         var nextBtn = document.getElementById('nextBtn');
         
-        if (savedVolume !== null) {
-            volumeSlider.value = savedVolume;
-            if (currentAudio) currentAudio.volume = savedVolume / 100;
+        if (volumeSlider) {
+            volumeSlider.addEventListener('input', function() {
+                var volume = volumeSlider.value / 100;
+                if (currentAudio) currentAudio.volume = volume;
+                localStorage.setItem('musicVolume', volumeSlider.value);
+            });
+            
+            if (currentAudio) currentAudio.volume = volumeSlider.value / 100;
         }
         
-        function updateButtonState() {
-            if (isPlaying) {
-                toggleBtn.classList.add('on');
-                toggleBtn.classList.remove('off');
-                toggleBtn.querySelector('.toggle-status').textContent = 'ON';
-                toggleBtn.querySelector('.toggle-icon').className = 'fas fa-volume-up toggle-icon';
-            } else {
-                toggleBtn.classList.add('off');
-                toggleBtn.classList.remove('on');
-                toggleBtn.querySelector('.toggle-status').textContent = 'OFF';
-                toggleBtn.querySelector('.toggle-icon').className = 'fas fa-volume-mute toggle-icon';
-            }
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', function() {
+                if (isPlaying) {
+                    if (currentAudio) currentAudio.pause();
+                    isPlaying = false;
+                } else {
+                    if (currentAudio) {
+                        currentAudio.play().catch(function(err) {
+                            console.log('Playback bloqueado:', err);
+                        });
+                    }
+                    isPlaying = true;
+                }
+                localStorage.setItem('musicState', isPlaying);
+                updateButtonState();
+            });
         }
         
-        toggleBtn.addEventListener('click', function() {
-            if (isPlaying) {
-                if (currentAudio) currentAudio.pause();
-                isPlaying = false;
-            } else {
-                if (currentAudio) currentAudio.play().catch(function(err) {
-                    console.log('Playback bloqueado:', err);
-                });
-                isPlaying = true;
-            }
-            localStorage.setItem('musicState', isPlaying);
-            updateButtonState();
-        });
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function() {
+                currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+                loadSong(currentSongIndex, isPlaying);
+                localStorage.setItem('currentSong', currentSongIndex);
+            });
+        }
         
-        volumeSlider.addEventListener('input', function() {
-            var volume = volumeSlider.value / 100;
-            if (currentAudio) currentAudio.volume = volume;
-            localStorage.setItem('musicVolume', volumeSlider.value);
-        });
-        
-        prevBtn.addEventListener('click', function() {
-            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
-            loadSong(currentSongIndex);
-            localStorage.setItem('currentSong', currentSongIndex);
-            if (isPlaying && currentAudio) {
-                currentAudio.play().catch(function(err) {
-                    console.log('Playback bloqueado:', err);
-                });
-            }
-        });
-        
-        nextBtn.addEventListener('click', function() {
-            currentSongIndex = (currentSongIndex + 1) % playlist.length;
-            loadSong(currentSongIndex);
-            localStorage.setItem('currentSong', currentSongIndex);
-            if (isPlaying && currentAudio) {
-                currentAudio.play().catch(function(err) {
-                    console.log('Playback bloqueado:', err);
-                });
-            }
-        });
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                currentSongIndex = (currentSongIndex + 1) % playlist.length;
+                loadSong(currentSongIndex, isPlaying);
+                localStorage.setItem('currentSong', currentSongIndex);
+            });
+        }
         
         updateButtonState();
     }
@@ -458,43 +489,55 @@
             }, 3000);
         }
         
-        copyBtn.addEventListener('click', function() {
-            var url = window.location.href;
-            navigator.clipboard.writeText(url).then(function() {
-                showToast(translations[currentLanguage].linkCopied);
+        if (copyBtn) {
+            copyBtn.addEventListener('click', function() {
+                var url = window.location.href;
+                navigator.clipboard.writeText(url).then(function() {
+                    showToast(translations[currentLanguage].linkCopied);
+                });
             });
-        });
+        }
         
-        whatsappBtn.addEventListener('click', function() {
-            var url = window.location.href;
-            var text = encodeURIComponent('Confira a página da Ecológica Verde: ' + url);
-            window.open('https://wa.me/?text=' + text, '_blank');
-        });
-        
-        qrBtn.addEventListener('click', function() {
-            var container = document.getElementById('qrCodeContainer');
-            container.innerHTML = '';
-            var url = window.location.href;
-            new QRCode(container, {
-                text: url,
-                width: 200,
-                height: 200,
-                colorDark: '#4caf50',
-                colorLight: '#ffffff',
-                correctLevel: QRCode.CorrectLevel.H
+        if (whatsappBtn) {
+            whatsappBtn.addEventListener('click', function() {
+                var url = window.location.href;
+                var text = encodeURIComponent('Confira a página da Ecológica Verde: ' + url);
+                window.open('https://wa.me/?text=' + text, '_blank');
             });
-            modal.style.display = 'flex';
-        });
+        }
         
-        closeSpan.addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
+        if (qrBtn) {
+            qrBtn.addEventListener('click', function() {
+                var container = document.getElementById('qrCodeContainer');
+                if (container) {
+                    container.innerHTML = '';
+                    var url = window.location.href;
+                    new QRCode(container, {
+                        text: url,
+                        width: 200,
+                        height: 200,
+                        colorDark: '#4caf50',
+                        colorLight: '#ffffff',
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                }
+                if (modal) modal.style.display = 'flex';
+            });
+        }
         
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
+        if (closeSpan) {
+            closeSpan.addEventListener('click', function() {
+                if (modal) modal.style.display = 'none';
+            });
+        }
+        
+        if (modal) {
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
     }
 
     function initLanguageSelector() {
@@ -503,16 +546,55 @@
             currentLanguage = savedLang;
         }
         
-        var langBtns = document.querySelectorAll('.lang-btn');
-        langBtns.forEach(function(btn) {
-            btn.addEventListener('click', function() {
+        var menuBtn = document.getElementById('languageMenuBtn');
+        var dropdown = document.getElementById('languageDropdown');
+        var langOptions = document.querySelectorAll('.lang-option');
+        
+        if (menuBtn && dropdown) {
+            menuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+            
+            document.addEventListener('click', function() {
+                dropdown.classList.remove('show');
+            });
+            
+            dropdown.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+        
+        langOptions.forEach(function(option) {
+            option.addEventListener('click', function() {
                 currentLanguage = this.getAttribute('data-lang');
                 localStorage.setItem('language', currentLanguage);
                 updateLanguage();
+                dropdown.classList.remove('show');
             });
         });
         
         updateLanguage();
+    }
+
+    function initFloatingMenu() {
+        var triggerBtn = document.getElementById('menuTriggerBtn');
+        var popup = document.getElementById('menuPopup');
+        
+        if (triggerBtn && popup) {
+            triggerBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                popup.classList.toggle('show');
+            });
+            
+            document.addEventListener('click', function() {
+                popup.classList.remove('show');
+            });
+            
+            popup.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -522,5 +604,6 @@
         initMusicPlayer();
         initShareFeatures();
         initLanguageSelector();
+        initFloatingMenu();
     });
 })();

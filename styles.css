@@ -72,32 +72,30 @@ body {
     height: 100%;
     z-index: 2;
     pointer-events: none;
+    overflow: hidden;
 }
 
 .particle-dot {
     position: absolute;
-    width: 1.5px;
-    height: 1.5px;
     background: #8bc34a;
     border-radius: 50%;
     animation: floatUp linear infinite;
-    opacity: 0;
     box-shadow: 0 0 6px #a5d66e, 0 0 12px #8bc34a, 0 0 18px #6baf5a;
 }
 
 @keyframes floatUp {
     0% {
-        transform: translateY(100vh) scale(0);
+        transform: translateY(0) scale(0.3);
         opacity: 0;
     }
-    10% {
-        opacity: 0.7;
+    20% {
+        opacity: 0.6;
     }
     80% {
         opacity: 0.3;
     }
     100% {
-        transform: translateY(-100px) scale(1);
+        transform: translateY(-120vh) scale(1);
         opacity: 0;
     }
 }
@@ -129,7 +127,6 @@ body {
     border-radius: 24px;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 50px rgba(45, 90, 39, 0.15);
     overflow: hidden;
-    margin-bottom: 16px;
 }
 
 .card-content {
@@ -436,50 +433,145 @@ body {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
-.controls-panel {
+.language-menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 30;
     background: rgba(13, 34, 18, 0.85);
     backdrop-filter: blur(50px);
     -webkit-backdrop-filter: blur(50px);
     border: 1px solid rgba(74, 140, 63, 0.3);
-    border-radius: 24px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.language-selector {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.lang-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(74, 140, 63, 0.3);
-    border-radius: 20px;
-    padding: 6px 12px;
-    color: #ffffff;
-    font-size: 0.7rem;
-    font-weight: 600;
+    border-radius: 12px;
+    padding: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.language-menu-btn:hover {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: #4caf50;
+    transform: translateY(-2px);
+}
+
+.language-dropdown {
+    position: fixed;
+    top: 70px;
+    left: 20px;
+    z-index: 29;
+    background: rgba(13, 34, 18, 0.95);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    border: 1px solid rgba(74, 140, 63, 0.3);
+    border-radius: 16px;
+    padding: 8px;
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 140px;
+}
+
+.language-dropdown.show {
+    display: flex;
+}
+
+.lang-option {
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    text-align: left;
     font-family: inherit;
 }
 
-.lang-btn:hover {
+.lang-option:hover {
     background: rgba(76, 175, 80, 0.2);
-    border-color: #4caf50;
-    transform: translateY(-1px);
 }
 
-.music-controls {
+.floating-menu {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 30;
+}
+
+.menu-trigger-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(13, 34, 18, 0.85);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    border: 1px solid rgba(74, 140, 63, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 8px;
+    color: #ffffff;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.menu-trigger-btn:hover {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: #4caf50;
+    transform: scale(1.05);
+}
+
+.menu-popup {
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    background: rgba(13, 34, 18, 0.95);
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    border: 1px solid rgba(74, 140, 63, 0.3);
+    border-radius: 20px;
+    padding: 16px;
+    width: 280px;
+    display: none;
+    flex-direction: column;
     gap: 12px;
-    flex-wrap: wrap;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.menu-popup.show {
+    display: flex;
+}
+
+.menu-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(74, 140, 63, 0.3);
+    padding-bottom: 6px;
+}
+
+.menu-section-title i {
+    font-size: 0.7rem;
+    color: #4caf50;
 }
 
 .music-toggle-btn {
@@ -487,12 +579,11 @@ body {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(74, 140, 63, 0.3);
     border-radius: 50px;
-    padding: 6px 12px;
+    padding: 8px 12px;
     display: flex;
     align-items: center;
     gap: 10px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .music-toggle-btn:hover {
@@ -571,7 +662,7 @@ body {
 }
 
 .volume-control input {
-    width: 80px;
+    width: 100%;
     height: 3px;
     -webkit-appearance: none;
     background: rgba(255, 255, 255, 0.2);
@@ -590,16 +681,18 @@ body {
 
 .playlist-controls {
     display: flex;
-    gap: 6px;
+    align-items: center;
+    gap: 8px;
+    justify-content: space-between;
 }
 
 .playlist-btn {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(74, 140, 63, 0.3);
     border-radius: 50px;
-    padding: 6px 12px;
+    padding: 6px 10px;
     color: #ffffff;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -607,40 +700,54 @@ body {
 .playlist-btn:hover {
     background: rgba(76, 175, 80, 0.2);
     border-color: #4caf50;
-    transform: translateY(-1px);
 }
 
-.share-controls {
+.now-playing {
+    font-size: 0.65rem;
+    color: #4caf50;
+    font-weight: 500;
+    background: rgba(76, 175, 80, 0.1);
+    padding: 4px 8px;
+    border-radius: 20px;
+}
+
+.menu-divider {
+    height: 1px;
+    background: rgba(74, 140, 63, 0.3);
+    margin: 4px 0;
+}
+
+.share-buttons {
     display: flex;
+    flex-direction: column;
     gap: 8px;
-    justify-content: center;
-    flex-wrap: wrap;
 }
 
-.share-btn {
+.share-action-btn {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(74, 140, 63, 0.3);
-    border-radius: 20px;
-    padding: 8px 14px;
+    border-radius: 12px;
+    padding: 8px 12px;
     color: #ffffff;
     font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-family: inherit;
 }
 
-.share-btn:hover {
+.share-action-btn:hover {
     background: rgba(76, 175, 80, 0.2);
     border-color: #4caf50;
-    transform: translateY(-1px);
+    transform: translateX(2px);
 }
 
-.share-btn i {
+.share-action-btn i {
     font-size: 0.9rem;
+    width: 20px;
 }
 
 .qr-modal {
@@ -717,25 +824,21 @@ body {
 }
 
 @media (max-width: 480px) {
-    .music-controls {
-        flex-direction: column;
-        align-items: stretch;
+    .menu-popup {
+        width: 260px;
+        right: 0;
     }
     
-    .volume-control {
-        justify-content: center;
+    .language-menu-btn {
+        top: 16px;
+        left: 16px;
+        padding: 8px;
     }
     
-    .playlist-controls {
-        justify-content: center;
-    }
-    
-    .share-controls {
-        flex-direction: column;
-    }
-    
-    .share-btn {
-        justify-content: center;
+    .language-dropdown {
+        top: 60px;
+        left: 16px;
+        min-width: 130px;
     }
     
     .toast-message {
