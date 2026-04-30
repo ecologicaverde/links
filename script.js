@@ -4,7 +4,8 @@
         instagram: '1281',
         threads: '42',
         tiktok: '146',
-        facebook: '20'
+        facebook: '20',
+        discord: '58329'
     };
 
     function formatNumber(num) {
@@ -42,7 +43,7 @@
         if (!container) {
             return;
         }
-        for (var i = 0; i < 25; i++) {
+        for (var i = 0; i < 30; i++) {
             var dot = document.createElement('div');
             dot.className = 'particle-dot';
             dot.style.left = Math.random() * 100 + '%';
@@ -62,7 +63,8 @@
             url: 'https://ecologica2verde.online/',
             icon: 'fa-globe',
             styleClass: 'website',
-            hasFollowers: false
+            hasFollowers: false,
+            useLogoIcon: true
         },
         {
             name: 'Twitter / X',
@@ -108,6 +110,16 @@
             styleClass: 'facebook',
             hasFollowers: true,
             key: 'facebook'
+        },
+        {
+            name: 'Discord Server',
+            username: 'Ecológica Verde',
+            url: 'https://discord.gg/ZPbzpcPwFf',
+            icon: 'fa-discord',
+            styleClass: 'discord',
+            hasFollowers: true,
+            key: 'discord',
+            followersLabel: 'membros'
         }
     ];
 
@@ -120,14 +132,22 @@
 
         var statsHtml = '';
         if (link.hasFollowers && followersData[link.key]) {
+            var label = link.followersLabel || 'seguidores';
             statsHtml = '<span class="link-followers"><i class="fas fa-users"></i> ' +
-                        formatNumber(followersData[link.key]) + '</span>';
+                        formatNumber(followersData[link.key]) + ' ' + label + '</span>';
+        }
+
+        var iconHtml = '';
+        if (link.useLogoIcon) {
+            iconHtml = '<img src="assets/logo/logo.png" alt="Ecológica Verde">';
+        } else {
+            iconHtml = '<i class="fa-brands ' + link.icon + '"></i>';
         }
 
         a.innerHTML =
             '<div class="link-left">' +
                 '<div class="icon-box ' + link.styleClass + '">' +
-                    '<i class="fa-brands ' + link.icon + '"></i>' +
+                    iconHtml +
                 '</div>' +
                 '<div class="link-info">' +
                     '<span class="link-label">' + link.name + '</span>' +
@@ -168,6 +188,7 @@
                     if (data.threads) followersData.threads = data.threads;
                     if (data.tiktok) followersData.tiktok = data.tiktok;
                     if (data.facebook) followersData.facebook = data.facebook;
+                    if (data.discord) followersData.discord = data.discord;
                 } catch (e) {}
             }
             renderLinks();

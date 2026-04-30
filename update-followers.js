@@ -11,6 +11,7 @@ let followers = {
     threads: '42',
     tiktok: '146',
     facebook: '20',
+    discord: '58329',
     lastUpdated: new Date().toISOString()
 };
 
@@ -110,6 +111,40 @@ async function fetchFacebookFollowers() {
     return null;
 }
 
+async function fetchDiscordMembers() {
+    try {
+        const response = await axios.get('https://discord.com/api/v9/invites/ZPbzpcPwFf?with_counts=true', {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            },
+            timeout: 10000
+        });
+        if (response.data && response.data.approximate_member_count) {
+            return response.data.approximate_member_count.toString();
+        }
+    } catch (error) {
+        console.error('Erro ao buscar Discord via API:', error.message);
+    }
+    
+    try {
+        const response = await axios.get('https://www.google.com/search?q=discord+ecologica+verde+members', {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            },
+            timeout: 10000
+        });
+        const html = response.data;
+        const match = html.match(/(\d+)\s*members/);
+        if (match && match[1]) {
+            return match[1];
+        }
+    } catch (error) {
+        console.error('Erro ao buscar Discord via Google:', error.message);
+    }
+    
+    return null;
+}
+
 async function updateAllFollowers() {
     console.log('Iniciando atualização de seguidores...');
     
@@ -141,6 +176,12 @@ async function updateAllFollowers() {
     if (facebookFollowers) {
         followers.facebook = facebookFollowers;
         console.log('Facebook atualizado:', facebookFollowers);
+    }
+    
+    const discordMembers = await fetchDiscordMembers();
+    if (discordMembers) {
+        followers.discord = discordMembers;
+        console.log('Discord atualizado:', discordMembers);
     }
     
     followers.lastUpdated = new Date().toISOString();
