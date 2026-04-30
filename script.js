@@ -14,7 +14,37 @@ function formatNumber(num) {
     } else if (n >= 1000) {
         return (n / 1000).toFixed(1).replace('.0', '') + 'K';
     }
-    return n.toString();
+    return n.toLocaleString('pt-BR');
+}
+
+function calculateTotalFollowers() {
+    let total = 0;
+    Object.values(followersData).forEach(value => {
+        total += parseInt(value) || 0;
+    });
+    return total;
+}
+
+function updateTotalFollowers() {
+    const totalElement = document.getElementById('totalFollowers');
+    if (totalElement) {
+        const total = calculateTotalFollowers();
+        totalElement.textContent = formatNumber(total);
+    }
+}
+
+function createParticles() {
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particle.style.animationDelay = Math.random() * 10 + 's';
+        particle.style.width = (Math.random() * 3 + 1) + 'px';
+        particle.style.height = particle.style.width;
+        particlesContainer.appendChild(particle);
+    }
 }
 
 fetch('followers.json')
@@ -28,9 +58,11 @@ fetch('followers.json')
             facebook: data.facebook || '20'
         };
         renderLinks();
+        updateTotalFollowers();
     })
     .catch(() => {
         renderLinks();
+        updateTotalFollowers();
     });
 
 const socialLinks = [
@@ -94,7 +126,7 @@ function createLinkElement(link, followers) {
     let followersHTML = '';
     if (link.followersKey && followers[link.followersKey]) {
         const formattedCount = formatNumber(followers[link.followersKey]);
-        followersHTML = `<span class="link-followers"><i class="fas fa-users"></i> ${formattedCount} seguidores</span>`;
+        followersHTML = `<span class="link-followers"><i class="fas fa-users"></i> ${formattedCount}</span>`;
     }
     
     a.innerHTML = `
@@ -121,13 +153,15 @@ function renderLinks() {
     
     socialLinks.forEach((link, index) => {
         const linkElement = createLinkElement(link, followersData);
-        linkElement.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1}s both`;
+        linkElement.style.animationDelay = `${0.2 + index * 0.1}s`;
         container.appendChild(linkElement);
     });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    createParticles();
     if (document.getElementById('linksContainer')) {
         renderLinks();
+        updateTotalFollowers();
     }
 });

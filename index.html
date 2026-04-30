@@ -12,27 +12,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="background-decoration">
-        <div class="circle circle-1"></div>
-        <div class="circle circle-2"></div>
-        <div class="circle circle-3"></div>
-    </div>
+    <div class="background-blur"></div>
+    <div class="background-overlay"></div>
+    <div class="particles" id="particles"></div>
 
     <main class="container">
-        <div class="profile-section">
-            <div class="logo-wrapper">
-                <img src="assets/logo/logo.png" alt="Ecológica Verde" class="logo">
+        <div class="card">
+            <div class="card-header">
+                <div class="logo-container">
+                    <div class="logo-ring"></div>
+                    <img src="assets/logo/logo.png" alt="Ecológica Verde" class="logo">
+                </div>
+                <h1 class="brand-name">Ecológica Verde</h1>
+                <p class="brand-tagline">Soluções sustentáveis para um futuro melhor</p>
+                <div class="divider"></div>
             </div>
-            <h1 class="title">Ecológica Verde</h1>
-            <p class="subtitle">Soluções sustentáveis para um futuro melhor</p>
-        </div>
 
-        <div class="links-section" id="linksContainer">
-        </div>
+            <div class="links-container" id="linksContainer">
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <p>Carregando links...</p>
+                </div>
+            </div>
 
-        <footer class="footer">
-            <p>&copy; 2024 Ecológica Verde. Todos os direitos reservados.</p>
-        </footer>
+            <div class="card-footer">
+                <div class="social-proof">
+                    <div class="followers-count">
+                        <i class="fas fa-users"></i>
+                        <span id="totalFollowers">0</span>
+                        <span class="followers-label">seguidores</span>
+                    </div>
+                </div>
+                <p class="copyright">&copy; 2024 Ecológica Verde</p>
+            </div>
+        </div>
     </main>
 
     <script src="script.js"></script>
