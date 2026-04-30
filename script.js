@@ -8,6 +8,166 @@
         discord: '58329'
     };
 
+    var currentLanguage = 'pt';
+    var currentAudio = null;
+    var currentSongIndex = 0;
+    var isPlaying = true;
+    var playlist = ['OS1.m4a', 'OS2.m4a', 'OS3.m4a', 'OS4.m4a'];
+
+    var translations = {
+        pt: {
+            title: 'Ecológica Verde',
+            subtitle: 'ᴅɪᴠᴜʟɢᴀɴᴅᴏ ᴄᴏɪsᴀs “ᴄᴏᴍᴘʀᴀᴅᴀs” ᴇᴄᴏʟᴏɢɪᴄᴀᴍᴇɴᴛᴇ.',
+            totalFollowers: 'Total de Seguidores',
+            nonprofit: 'Projeto sem fins lucrativos',
+            copyLink: 'Copiar Link',
+            whatsapp: 'WhatsApp',
+            qrCode: 'QR Code',
+            qrTitle: 'QR Code',
+            qrInstruction: 'Escaneie o QR Code para acessar esta página',
+            linkCopied: 'Link copiado!',
+            site: 'Site',
+            twitter: 'Twitter / X',
+            threads: 'Threads',
+            tiktok: 'TikTok',
+            instagram: 'Instagram',
+            facebook: 'Facebook',
+            discord: 'Discord Server',
+            members: 'membros',
+            followers: 'seguidores'
+        },
+        en: {
+            title: 'Ecológica Verde',
+            subtitle: 'SHARING ECOLOGICALLY "PURCHASED" THINGS.',
+            totalFollowers: 'Total Followers',
+            nonprofit: 'Non-profit project',
+            copyLink: 'Copy Link',
+            whatsapp: 'WhatsApp',
+            qrCode: 'QR Code',
+            qrTitle: 'QR Code',
+            qrInstruction: 'Scan QR Code to access this page',
+            linkCopied: 'Link copied!',
+            site: 'Site',
+            twitter: 'Twitter / X',
+            threads: 'Threads',
+            tiktok: 'TikTok',
+            instagram: 'Instagram',
+            facebook: 'Facebook',
+            discord: 'Discord Server',
+            members: 'members',
+            followers: 'followers'
+        },
+        es: {
+            title: 'Ecológica Verde',
+            subtitle: 'COMPARTIENDO COSAS "COMPRADAS" ECOLÓGICAMENTE.',
+            totalFollowers: 'Total de Seguidores',
+            nonprofit: 'Proyecto sin fines de lucro',
+            copyLink: 'Copiar Enlace',
+            whatsapp: 'WhatsApp',
+            qrCode: 'Código QR',
+            qrTitle: 'Código QR',
+            qrInstruction: 'Escanea el código QR para acceder a esta página',
+            linkCopied: '¡Enlace copiado!',
+            site: 'Sitio',
+            twitter: 'Twitter / X',
+            threads: 'Threads',
+            tiktok: 'TikTok',
+            instagram: 'Instagram',
+            facebook: 'Facebook',
+            discord: 'Servidor Discord',
+            members: 'miembros',
+            followers: 'seguidores'
+        },
+        ru: {
+            title: 'Ecológica Verde',
+            subtitle: 'ДЕЛИМСЯ ЭКОЛОГИЧЕСКИ "ПРИОБРЕТЕННЫМИ" ВЕЩАМИ.',
+            totalFollowers: 'Всего подписчиков',
+            nonprofit: 'Некоммерческий проект',
+            copyLink: 'Копировать ссылку',
+            whatsapp: 'WhatsApp',
+            qrCode: 'QR-код',
+            qrTitle: 'QR-код',
+            qrInstruction: 'Отсканируйте QR-код для доступа к этой странице',
+            linkCopied: 'Ссылка скопирована!',
+            site: 'Сайт',
+            twitter: 'Twitter / X',
+            threads: 'Threads',
+            tiktok: 'TikTok',
+            instagram: 'Instagram',
+            facebook: 'Facebook',
+            discord: 'Discord сервер',
+            members: 'участников',
+            followers: 'подписчиков'
+        }
+    };
+
+    var linksConfig = [
+        {
+            nameKey: 'site',
+            username: 'ecologica2verde.online',
+            url: 'https://ecologica2verde.online/',
+            icon: 'fa-globe',
+            styleClass: 'website',
+            hasFollowers: false,
+            useFavicon: true
+        },
+        {
+            nameKey: 'twitter',
+            username: '@Ecologica3Verde',
+            url: 'https://x.com/Ecologica3Verde',
+            icon: 'fa-x-twitter',
+            styleClass: 'twitter',
+            hasFollowers: true,
+            key: 'twitter'
+        },
+        {
+            nameKey: 'threads',
+            username: '@ecologicaverde',
+            url: 'https://www.threads.com/@ecologicaverde',
+            icon: 'fa-threads',
+            styleClass: 'threads',
+            hasFollowers: true,
+            key: 'threads'
+        },
+        {
+            nameKey: 'tiktok',
+            username: '@ecologica2verde',
+            url: 'https://www.tiktok.com/@ecologica2verde',
+            icon: 'fa-tiktok',
+            styleClass: 'tiktok',
+            hasFollowers: true,
+            key: 'tiktok'
+        },
+        {
+            nameKey: 'instagram',
+            username: '@ecologicaverde',
+            url: 'https://www.instagram.com/ecologicaverde',
+            icon: 'fa-instagram',
+            styleClass: 'instagram',
+            hasFollowers: true,
+            key: 'instagram'
+        },
+        {
+            nameKey: 'facebook',
+            username: 'ecologica2verde',
+            url: 'https://www.facebook.com/ecologica2verde',
+            icon: 'fa-facebook-f',
+            styleClass: 'facebook',
+            hasFollowers: true,
+            key: 'facebook'
+        },
+        {
+            nameKey: 'discord',
+            username: 'Ecológica Verde',
+            url: 'https://discord.gg/ZPbzpcPwFf',
+            icon: 'fa-discord',
+            styleClass: 'discord',
+            hasFollowers: true,
+            key: 'discord',
+            followersLabelKey: 'members'
+        }
+    ];
+
     function formatNumber(num) {
         if (!num || num === '0') {
             return '0';
@@ -38,6 +198,21 @@
         }
     }
 
+    function updateLanguage() {
+        var t = translations[currentLanguage];
+        document.getElementById('siteTitle').textContent = t.title;
+        document.getElementById('siteSubtitle').textContent = t.subtitle;
+        document.getElementById('totalFollowersText').textContent = t.totalFollowers;
+        document.getElementById('nonprofitText').textContent = t.nonprofit;
+        document.getElementById('copyLinkText').textContent = t.copyLink;
+        document.getElementById('whatsappText').textContent = t.whatsapp;
+        document.getElementById('qrCodeText').textContent = t.qrCode;
+        document.getElementById('qrTitle').textContent = t.qrTitle;
+        document.getElementById('qrInstruction').textContent = t.qrInstruction;
+        
+        renderLinks();
+    }
+
     function createParticles() {
         var container = document.getElementById('particles');
         if (!container) {
@@ -57,73 +232,6 @@
         }
     }
 
-    var linksConfig = [
-        {
-            name: 'Site',
-            username: 'ecologica2verde.online',
-            url: 'https://ecologica2verde.online/',
-            icon: 'fa-globe',
-            styleClass: 'website',
-            hasFollowers: false,
-            useFavicon: true
-        },
-        {
-            name: 'Twitter / X',
-            username: '@Ecologica3Verde',
-            url: 'https://x.com/Ecologica3Verde',
-            icon: 'fa-x-twitter',
-            styleClass: 'twitter',
-            hasFollowers: true,
-            key: 'twitter'
-        },
-        {
-            name: 'Threads',
-            username: '@ecologicaverde',
-            url: 'https://www.threads.com/@ecologicaverde',
-            icon: 'fa-threads',
-            styleClass: 'threads',
-            hasFollowers: true,
-            key: 'threads'
-        },
-        {
-            name: 'TikTok',
-            username: '@ecologica2verde',
-            url: 'https://www.tiktok.com/@ecologica2verde',
-            icon: 'fa-tiktok',
-            styleClass: 'tiktok',
-            hasFollowers: true,
-            key: 'tiktok'
-        },
-        {
-            name: 'Instagram',
-            username: '@ecologicaverde',
-            url: 'https://www.instagram.com/ecologicaverde',
-            icon: 'fa-instagram',
-            styleClass: 'instagram',
-            hasFollowers: true,
-            key: 'instagram'
-        },
-        {
-            name: 'Facebook',
-            username: 'ecologica2verde',
-            url: 'https://www.facebook.com/ecologica2verde',
-            icon: 'fa-facebook-f',
-            styleClass: 'facebook',
-            hasFollowers: true,
-            key: 'facebook'
-        },
-        {
-            name: 'Discord Server',
-            username: 'Ecológica Verde',
-            url: 'https://discord.gg/ZPbzpcPwFf',
-            icon: 'fa-discord',
-            styleClass: 'discord',
-            hasFollowers: true,
-            key: 'discord',
-            followersLabel: 'membros'
-        }
-    ];
-
     function buildLink(link) {
         var a = document.createElement('a');
         a.href = link.url;
@@ -131,11 +239,13 @@
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
 
+        var t = translations[currentLanguage];
+        var labelText = link.followersLabelKey === 'members' ? t.members : t.followers;
+        
         var statsHtml = '';
         if (link.hasFollowers && followersData[link.key]) {
-            var label = link.followersLabel || 'seguidores';
             statsHtml = '<span class="link-followers"><i class="fas fa-users"></i> ' +
-                        formatNumber(followersData[link.key]) + ' ' + label + '</span>';
+                        formatNumber(followersData[link.key]) + ' ' + labelText + '</span>';
         }
 
         var iconHtml = '';
@@ -145,13 +255,15 @@
             iconHtml = '<i class="fa-brands ' + link.icon + '"></i>';
         }
 
+        var linkName = t[link.nameKey] || link.nameKey;
+
         a.innerHTML =
             '<div class="link-left">' +
                 '<div class="icon-box ' + link.styleClass + '">' +
                     iconHtml +
                 '</div>' +
                 '<div class="link-info">' +
-                    '<span class="link-label">' + link.name + '</span>' +
+                    '<span class="link-label">' + linkName + '</span>' +
                     '<span class="link-user">' + link.username + '</span>' +
                     statsHtml +
                 '</div>' +
@@ -209,13 +321,68 @@
         xhr.send();
     }
 
-    function initMusicPlayer() {
-        var audio = new Audio('assets/music/OST.m4a');
-        audio.loop = true;
-        var isPlaying = true;
-        var toggleBtn = document.getElementById('musicToggle');
-        if (!toggleBtn) return;
+    function getRandomSong() {
+        return Math.floor(Math.random() * playlist.length);
+    }
 
+    function loadSong(index) {
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio = null;
+        }
+        
+        var songPath = 'assets/music/' + playlist[index];
+        currentAudio = new Audio(songPath);
+        currentAudio.loop = false;
+        currentAudio.volume = document.getElementById('volumeSlider').value / 100;
+        
+        currentAudio.addEventListener('ended', function() {
+            var nextIndex = (currentSongIndex + 1) % playlist.length;
+            currentSongIndex = nextIndex;
+            loadSong(currentSongIndex);
+            if (isPlaying) {
+                currentAudio.play().catch(function(err) {
+                    console.log('Playback bloqueado:', err);
+                });
+            }
+        });
+        
+        if (isPlaying) {
+            currentAudio.play().catch(function(err) {
+                console.log('Playback bloqueado:', err);
+            });
+        }
+    }
+
+    function initMusicPlayer() {
+        var savedState = localStorage.getItem('musicState');
+        var savedVolume = localStorage.getItem('musicVolume');
+        var savedSongIndex = localStorage.getItem('currentSong');
+        
+        if (savedState !== null) {
+            isPlaying = savedState === 'true';
+        } else {
+            isPlaying = true;
+        }
+        
+        if (savedSongIndex !== null && parseInt(savedSongIndex) < playlist.length) {
+            currentSongIndex = parseInt(savedSongIndex);
+        } else {
+            currentSongIndex = getRandomSong();
+        }
+        
+        loadSong(currentSongIndex);
+        
+        var toggleBtn = document.getElementById('musicToggle');
+        var volumeSlider = document.getElementById('volumeSlider');
+        var prevBtn = document.getElementById('prevBtn');
+        var nextBtn = document.getElementById('nextBtn');
+        
+        if (savedVolume !== null) {
+            volumeSlider.value = savedVolume;
+            if (currentAudio) currentAudio.volume = savedVolume / 100;
+        }
+        
         function updateButtonState() {
             if (isPlaying) {
                 toggleBtn.classList.add('on');
@@ -229,27 +396,123 @@
                 toggleBtn.querySelector('.toggle-icon').className = 'fas fa-volume-mute toggle-icon';
             }
         }
-
+        
         toggleBtn.addEventListener('click', function() {
             if (isPlaying) {
-                audio.pause();
+                if (currentAudio) currentAudio.pause();
                 isPlaying = false;
             } else {
-                audio.play().catch(function(err) {
-                    console.log('Autoplay bloqueado:', err);
+                if (currentAudio) currentAudio.play().catch(function(err) {
+                    console.log('Playback bloqueado:', err);
                 });
                 isPlaying = true;
             }
+            localStorage.setItem('musicState', isPlaying);
             updateButtonState();
         });
-
-        audio.play().catch(function(err) {
-            console.log('Autoplay bloqueado pelo navegador:', err);
-            isPlaying = false;
-            updateButtonState();
+        
+        volumeSlider.addEventListener('input', function() {
+            var volume = volumeSlider.value / 100;
+            if (currentAudio) currentAudio.volume = volume;
+            localStorage.setItem('musicVolume', volumeSlider.value);
         });
-
+        
+        prevBtn.addEventListener('click', function() {
+            currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+            loadSong(currentSongIndex);
+            localStorage.setItem('currentSong', currentSongIndex);
+            if (isPlaying && currentAudio) {
+                currentAudio.play().catch(function(err) {
+                    console.log('Playback bloqueado:', err);
+                });
+            }
+        });
+        
+        nextBtn.addEventListener('click', function() {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length;
+            loadSong(currentSongIndex);
+            localStorage.setItem('currentSong', currentSongIndex);
+            if (isPlaying && currentAudio) {
+                currentAudio.play().catch(function(err) {
+                    console.log('Playback bloqueado:', err);
+                });
+            }
+        });
+        
         updateButtonState();
+    }
+
+    function initShareFeatures() {
+        var copyBtn = document.getElementById('copyLinkBtn');
+        var whatsappBtn = document.getElementById('whatsappBtn');
+        var qrBtn = document.getElementById('qrCodeBtn');
+        var modal = document.getElementById('qrModal');
+        var closeSpan = document.querySelector('.qr-close');
+        var toast = document.getElementById('toastMessage');
+        
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        copyBtn.addEventListener('click', function() {
+            var url = window.location.href;
+            navigator.clipboard.writeText(url).then(function() {
+                showToast(translations[currentLanguage].linkCopied);
+            });
+        });
+        
+        whatsappBtn.addEventListener('click', function() {
+            var url = window.location.href;
+            var text = encodeURIComponent('Confira a página da Ecológica Verde: ' + url);
+            window.open('https://wa.me/?text=' + text, '_blank');
+        });
+        
+        qrBtn.addEventListener('click', function() {
+            var container = document.getElementById('qrCodeContainer');
+            container.innerHTML = '';
+            var url = window.location.href;
+            new QRCode(container, {
+                text: url,
+                width: 200,
+                height: 200,
+                colorDark: '#4caf50',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            modal.style.display = 'flex';
+        });
+        
+        closeSpan.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
+
+    function initLanguageSelector() {
+        var savedLang = localStorage.getItem('language');
+        if (savedLang && translations[savedLang]) {
+            currentLanguage = savedLang;
+        }
+        
+        var langBtns = document.querySelectorAll('.lang-btn');
+        langBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                currentLanguage = this.getAttribute('data-lang');
+                localStorage.setItem('language', currentLanguage);
+                updateLanguage();
+            });
+        });
+        
+        updateLanguage();
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -257,5 +520,7 @@
         updateTotalDisplay();
         loadFollowers();
         initMusicPlayer();
+        initShareFeatures();
+        initLanguageSelector();
     });
 })();
