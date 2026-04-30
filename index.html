@@ -12,38 +12,42 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="background-blur"></div>
-    <div class="background-overlay"></div>
+    <div class="bg-wallpaper"></div>
+    <div class="bg-overlay"></div>
     <div class="particles" id="particles"></div>
 
-    <main class="container">
-        <div class="card">
-            <div class="card-header">
-                <div class="logo-container">
-                    <div class="logo-ring"></div>
-                    <img src="assets/logo/logo.png" alt="Ecológica Verde" class="logo">
+    <main class="main-container">
+        <div class="modal-card">
+            <div class="card-inner">
+                <div class="profile-section">
+                    <div class="avatar-wrapper">
+                        <div class="avatar-border"></div>
+                        <img src="assets/logo/logo.png" alt="Ecológica Verde" class="avatar">
+                    </div>
+                    <h1 class="profile-name">Ecológica Verde</h1>
+                    <p class="profile-bio">Soluções sustentáveis para um futuro melhor</p>
                 </div>
-                <h1 class="brand-name">Ecológica Verde</h1>
-                <p class="brand-tagline">Soluções sustentáveis para um futuro melhor</p>
-                <div class="divider"></div>
-            </div>
 
-            <div class="links-container" id="linksContainer">
-                <div class="loading-state">
-                    <div class="loading-spinner"></div>
-                    <p>Carregando links...</p>
-                </div>
-            </div>
-
-            <div class="card-footer">
-                <div class="social-proof">
-                    <div class="followers-count">
-                        <i class="fas fa-users"></i>
-                        <span id="totalFollowers">0</span>
-                        <span class="followers-label">seguidores</span>
+                <div class="links-section" id="linksContainer">
+                    <div class="skeleton">
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
+                        <div class="skeleton-item"></div>
                     </div>
                 </div>
-                <p class="copyright">&copy; 2024 Ecológica Verde</p>
+
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <i class="fas fa-users"></i>
+                        <span id="totalFollowers">0</span>
+                        <span class="stat-label">Total de Seguidores</span>
+                    </div>
+                </div>
+
+                <footer class="footer-section">
+                    <p>&copy; 2024 Ecológica Verde</p>
+                </footer>
             </div>
         </div>
     </main>

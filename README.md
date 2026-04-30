@@ -1,16 +1,23 @@
 # Ecológica Verde - Links Page
 
-Página de links da Ecológica Verde com atualização automática de seguidores.
+Página de links oficial da Ecológica Verde.
 
-## Estrutura
+## Links
 
-- `index.html` - Página principal
-- `styles.css` - Estilos
-- `script.js` - Lógica do frontend
-- `followers.json` - Dados dos seguidores
-- `update-followers.js` - Script de atualização
-- `.github/workflows/update-followers.yml` - GitHub Actions
+- Site: https://ecologica2verde.online/
+- Twitter/X: https://x.com/Ecologica3Verde
+- Threads: https://www.threads.net/@ecologicaverde
+- TikTok: https://www.tiktok.com/@ecologica2verde
+- Instagram: https://www.instagram.com/ecologicaverde
+- Facebook: https://www.facebook.com/ecologica2verde
 
-## Atualização Automática
+## Atualização de Seguidores
 
-O GitHub Actions executa `update-followers.js` a cada 30 minutos para atualizar a contagem de seguidores.
+O GitHub Actions atualiza a contagem de seguidores a cada 1 hora automaticamente.
+
+## Tecnologias
+
+- HTML5
+- CSS3
+- JavaScript
+- GitHub Actions
