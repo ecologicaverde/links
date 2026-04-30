@@ -43,13 +43,13 @@
         if (!container) {
             return;
         }
-        for (var i = 0; i < 30; i++) {
+        for (var i = 0; i < 25; i++) {
             var dot = document.createElement('div');
             dot.className = 'particle-dot';
             dot.style.left = Math.random() * 100 + '%';
-            dot.style.animationDuration = (Math.random() * 12 + 8) + 's';
-            dot.style.animationDelay = Math.random() * 10 + 's';
-            var size = Math.random() * 2 + 1;
+            dot.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            dot.style.animationDelay = Math.random() * 8 + 's';
+            var size = Math.random() * 1.5 + 0.8;
             dot.style.width = size + 'px';
             dot.style.height = size + 'px';
             container.appendChild(dot);
@@ -169,7 +169,7 @@
 
         for (var i = 0; i < linksConfig.length; i++) {
             var el = buildLink(linksConfig[i]);
-            el.style.animationDelay = (0.15 + i * 0.08) + 's';
+            el.style.animationDelay = (0.1 + i * 0.06) + 's';
             container.appendChild(el);
         }
     }
