@@ -43,15 +43,16 @@
         if (!container) {
             return;
         }
-        for (var i = 0; i < 25; i++) {
+        for (var i = 0; i < 50; i++) {
             var dot = document.createElement('div');
             dot.className = 'particle-dot';
             dot.style.left = Math.random() * 100 + '%';
-            dot.style.animationDuration = (Math.random() * 10 + 8) + 's';
-            dot.style.animationDelay = Math.random() * 8 + 's';
-            var size = Math.random() * 1.5 + 0.8;
+            dot.style.animationDuration = (Math.random() * 12 + 6) + 's';
+            dot.style.animationDelay = Math.random() * 10 + 's';
+            var size = Math.random() * 2.5 + 0.8;
             dot.style.width = size + 'px';
             dot.style.height = size + 'px';
+            dot.style.opacity = Math.random() * 0.5 + 0.2;
             container.appendChild(dot);
         }
     }
@@ -211,7 +212,7 @@
     function initMusicPlayer() {
         var audio = new Audio('assets/music/OST.m4a');
         audio.loop = true;
-        var isPlaying = false;
+        var isPlaying = true;
         var toggleBtn = document.getElementById('musicToggle');
         if (!toggleBtn) return;
 
@@ -239,6 +240,12 @@
                 });
                 isPlaying = true;
             }
+            updateButtonState();
+        });
+
+        audio.play().catch(function(err) {
+            console.log('Autoplay bloqueado pelo navegador:', err);
+            isPlaying = false;
             updateButtonState();
         });
 
