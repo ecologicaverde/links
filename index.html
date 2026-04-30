@@ -16,63 +16,6 @@
     <div class="overlay-bg"></div>
     <div class="particles-container" id="particles"></div>
 
-    <div class="floating-menu" id="floatingMenu">
-        <button class="menu-trigger-btn" id="menuTriggerBtn">
-            <i class="fas fa-music"></i>
-        </button>
-        
-        <div class="menu-popup" id="menuPopup">
-            <div class="menu-section">
-                <div class="menu-section-title">
-                    <i class="fas fa-music"></i>
-                    <span id="musicSectionTitle">Música</span>
-                </div>
-                <div class="music-toggle-btn" id="musicToggle">
-                    <div class="toggle-track">
-                        <div class="toggle-thumb"></div>
-                    </div>
-                    <div class="toggle-content">
-                        <i class="fas fa-volume-up toggle-icon"></i>
-                        <span class="toggle-status">ON</span>
-                    </div>
-                </div>
-                <div class="volume-control">
-                    <i class="fas fa-volume-down"></i>
-                    <input type="range" id="volumeSlider" min="0" max="100" value="70">
-                    <i class="fas fa-volume-up"></i>
-                </div>
-                <div class="playlist-controls">
-                    <button class="playlist-btn" id="prevBtn"><i class="fas fa-backward"></i></button>
-                    <span class="now-playing" id="nowPlaying">OST1.m4a</span>
-                    <button class="playlist-btn" id="nextBtn"><i class="fas fa-forward"></i></button>
-                </div>
-            </div>
-
-            <div class="menu-divider"></div>
-
-            <div class="menu-section">
-                <div class="menu-section-title">
-                    <i class="fas fa-share-alt"></i>
-                    <span id="shareSectionTitle">Compartilhar</span>
-                </div>
-                <div class="share-buttons">
-                    <button class="share-action-btn" id="copyLinkBtn">
-                        <i class="fas fa-link"></i>
-                        <span id="copyLinkText">Copiar Link</span>
-                    </button>
-                    <button class="share-action-btn" id="whatsappBtn">
-                        <i class="fab fa-whatsapp"></i>
-                        <span id="whatsappText">WhatsApp</span>
-                    </button>
-                    <button class="share-action-btn" id="qrCodeBtn">
-                        <i class="fas fa-qrcode"></i>
-                        <span id="qrCodeText">QR Code</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="language-selector-bottom" id="languageSelectorBottom">
         <button class="language-menu-btn" id="languageMenuBtn">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-languages">
@@ -91,6 +34,47 @@
             <button class="lang-option" data-lang="en">🇺🇸 English</button>
             <button class="lang-option" data-lang="es">🇪🇸 Español</button>
             <button class="lang-option" data-lang="ru">🇷🇺 Русский</button>
+        </div>
+    </div>
+
+    <div class="music-panel" id="musicPanel">
+        <div class="music-panel-header">
+            <i class="fas fa-music"></i>
+            <span id="musicSectionTitle">Música</span>
+        </div>
+        <div class="music-toggle-btn" id="musicToggle">
+            <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+            </div>
+            <div class="toggle-content">
+                <i class="fas fa-volume-up toggle-icon"></i>
+                <span class="toggle-status">ON</span>
+            </div>
+        </div>
+        <div class="volume-control">
+            <i class="fas fa-volume-down"></i>
+            <input type="range" id="volumeSlider" min="0" max="100" value="70">
+            <i class="fas fa-volume-up"></i>
+        </div>
+        <div class="playlist-controls">
+            <button class="playlist-btn" id="prevBtn"><i class="fas fa-backward"></i></button>
+            <span class="now-playing" id="nowPlaying">OST1.m4a</span>
+            <button class="playlist-btn" id="nextBtn"><i class="fas fa-forward"></i></button>
+        </div>
+        <div class="music-panel-divider"></div>
+        <div class="share-buttons">
+            <button class="share-action-btn" id="copyLinkBtn">
+                <i class="fas fa-link"></i>
+                <span id="copyLinkText">Copiar Link</span>
+            </button>
+            <button class="share-action-btn" id="whatsappBtn">
+                <i class="fab fa-whatsapp"></i>
+                <span id="whatsappText">WhatsApp</span>
+            </button>
+            <button class="share-action-btn" id="qrCodeBtn">
+                <i class="fas fa-qrcode"></i>
+                <span id="qrCodeText">QR Code</span>
+            </button>
         </div>
     </div>
 
