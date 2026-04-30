@@ -75,18 +75,18 @@
             hasFollowers: true,
             key: 'twitter',
             useImageIcon: true,
-            imageIconSrc: 'assets/logos/twitter.png'
+            imageIconSrc: 'assets/logo/twitter.png'
         },
         {
-            name: 'Threads',
+            name: '',
             username: '@ecologicaverde',
-            url: 'https://www.threads.net/@ecologicaverde',
+            url: 'https://www..net/@ecologicaverde',
             icon: 'fa-threads',
             styleClass: 'threads',
             hasFollowers: true,
             key: 'threads',
             useImageIcon: true,
-            imageIconSrc: 'assets/logos/threads.png'
+            imageIconSrc: 'assets/logo/threads.png'
         },
         {
             name: 'TikTok',
