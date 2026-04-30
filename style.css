@@ -4,35 +4,6 @@
     box-sizing: border-box;
 }
 
-:root {
-    --green-900: #0a1a0f;
-    --green-800: #0f2a15;
-    --green-700: #1a3d1f;
-    --green-600: #2d5a27;
-    --green-500: #3d7a35;
-    --green-400: #4a8c3f;
-    --green-300: #6baf5a;
-    --green-200: #8bc34a;
-    --green-100: #a5d66e;
-    --white: #ffffff;
-    --gray-100: #f5f5f5;
-    --gray-200: #e5e5e5;
-    --gray-300: #d4d4d4;
-    --gray-400: #a3a3a3;
-    --gray-500: #737373;
-    --gray-600: #525252;
-    --gray-700: #404040;
-    --gray-800: #262626;
-    --gray-900: #171717;
-    --glass-bg: rgba(15, 42, 21, 0.75);
-    --glass-border: rgba(107, 175, 90, 0.25);
-    --glass-hover: rgba(26, 61, 31, 0.85);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-    --shadow-glow: 0 0 30px rgba(139, 195, 74, 0.15);
-}
-
 html {
     height: 100%;
 }
@@ -44,14 +15,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--green-900);
+    background-color: #0a1a0f;
     position: relative;
     overflow-x: hidden;
-    color: var(--white);
+    color: #ffffff;
     padding: 16px;
 }
 
-.bg-wallpaper {
+.wallpaper-bg {
     position: fixed;
     top: -10%;
     left: -10%;
@@ -61,30 +32,34 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(60px) brightness(0.25) saturate(0.4);
+    filter: blur(60px) brightness(0.2) saturate(0.3);
     z-index: 0;
     animation: bgPulse 20s ease-in-out infinite;
 }
 
 @keyframes bgPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
 }
 
-.bg-overlay {
+.overlay-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(ellipse at center, 
-        rgba(26, 61, 31, 0.7) 0%, 
-        rgba(10, 26, 15, 0.9) 50%, 
+    background: radial-gradient(ellipse at center,
+        rgba(26, 61, 31, 0.7) 0%,
+        rgba(10, 26, 15, 0.85) 50%,
         rgba(5, 15, 8, 0.95) 100%);
     z-index: 1;
 }
 
-.particles {
+.particles-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -94,15 +69,15 @@ body {
     pointer-events: none;
 }
 
-.particle {
+.particle-dot {
     position: absolute;
     width: 2px;
     height: 2px;
-    background: var(--green-200);
+    background: #a5d66e;
     border-radius: 50%;
     animation: floatUp linear infinite;
     opacity: 0;
-    box-shadow: 0 0 6px var(--green-100), 0 0 12px var(--green-200);
+    box-shadow: 0 0 6px #a5d66e, 0 0 12px #8bc34a;
 }
 
 @keyframes floatUp {
@@ -114,7 +89,7 @@ body {
         opacity: 0.7;
     }
     80% {
-        opacity: 0.3;
+        opacity: 0.2;
     }
     100% {
         transform: translateY(-100px) scale(1.2);
@@ -122,7 +97,7 @@ body {
     }
 }
 
-.main-container {
+.page-wrapper {
     position: relative;
     z-index: 10;
     width: 100%;
@@ -141,112 +116,108 @@ body {
     }
 }
 
-.modal-card {
-    background: var(--glass-bg);
+.linktree-card {
+    background: rgba(15, 42, 21, 0.75);
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
-    border: 1px solid var(--glass-border);
+    border: 1px solid rgba(107, 175, 90, 0.25);
     border-radius: 24px;
-    box-shadow: var(--shadow-lg), var(--shadow-glow);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 30px rgba(139, 195, 74, 0.1);
     overflow: hidden;
-    transition: border-color 0.3s ease;
 }
 
-.modal-card:hover {
-    border-color: rgba(107, 175, 90, 0.4);
-}
-
-.card-inner {
+.card-content {
     padding: 36px 28px 28px;
 }
 
-.profile-section {
+.header {
     text-align: center;
     margin-bottom: 28px;
 }
 
-.avatar-wrapper {
+.avatar-frame {
     position: relative;
     width: 96px;
     height: 96px;
     margin: 0 auto 20px;
 }
 
-.avatar-border {
+.avatar-glow {
     position: absolute;
-    top: -3px;
-    left: -3px;
-    right: -3px;
-    bottom: -3px;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
     border-radius: 50%;
-    background: conic-gradient(
-        from 0deg,
-        var(--green-200),
-        var(--green-400),
-        var(--green-600),
-        var(--green-400),
-        var(--green-200)
-    );
-    animation: rotateBorder 6s linear infinite;
+    background: conic-gradient(from 0deg, #8bc34a, #4a8c3f, #2d5a27, #4a8c3f, #8bc34a);
+    animation: rotateGlow 6s linear infinite;
     opacity: 0.6;
 }
 
-@keyframes rotateBorder {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+@keyframes rotateGlow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.avatar {
+.avatar-img {
     position: relative;
     width: 100%;
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid var(--green-800);
+    border: 3px solid #0f2a15;
     z-index: 1;
     display: block;
 }
 
-.profile-name {
+.title {
     font-size: 1.6rem;
     font-weight: 700;
-    color: var(--white);
+    color: #ffffff;
     margin-bottom: 6px;
     letter-spacing: -0.5px;
 }
 
-.profile-bio {
+.subtitle {
     font-size: 0.875rem;
     color: rgba(255, 255, 255, 0.6);
     font-weight: 400;
 }
 
-.links-section {
+.links-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     margin-bottom: 24px;
 }
 
-.skeleton {
+.placeholder-links {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
-.skeleton-item {
-    height: 64px;
-    background: rgba(255, 255, 255, 0.05);
+.placeholder-item {
+    height: 62px;
+    background: rgba(255, 255, 255, 0.04);
     border-radius: 14px;
     animation: skeletonPulse 1.5s ease-in-out infinite;
 }
 
 @keyframes skeletonPulse {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.6; }
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.6;
+    }
 }
 
-.link-btn {
+.link-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -255,7 +226,7 @@ body {
     border: 1px solid rgba(107, 175, 90, 0.2);
     border-radius: 14px;
     text-decoration: none;
-    color: var(--white);
+    color: #ffffff;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
@@ -274,33 +245,14 @@ body {
     }
 }
 
-.link-btn::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, 
-        rgba(139, 195, 74, 0.08), 
-        rgba(45, 90, 39, 0.12));
-    opacity: 0;
-    transition: opacity 0.35s ease;
-}
-
-.link-btn:hover {
+.link-item:hover {
     transform: translateY(-2px);
-    border-color: var(--green-300);
+    border-color: #6baf5a;
     background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 
-                0 0 16px rgba(139, 195, 74, 0.15);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 16px rgba(139, 195, 74, 0.15);
 }
 
-.link-btn:hover::after {
-    opacity: 1;
-}
-
-.link-btn:active {
+.link-item:active {
     transform: translateY(0);
 }
 
@@ -312,7 +264,7 @@ body {
     z-index: 1;
 }
 
-.link-icon {
+.icon-box {
     width: 44px;
     height: 44px;
     border-radius: 12px;
@@ -325,31 +277,31 @@ body {
     transition: transform 0.3s ease;
 }
 
-.link-btn:hover .link-icon {
+.link-item:hover .icon-box {
     transform: scale(1.08);
 }
 
-.link-icon.website {
+.icon-box.website {
     background: linear-gradient(135deg, #2d5a27, #4a8c3f);
 }
 
-.link-icon.twitter {
+.icon-box.twitter {
     background: #0f1419;
 }
 
-.link-icon.threads {
+.icon-box.threads {
     background: #0f1419;
 }
 
-.link-icon.tiktok {
-    background: #000;
+.icon-box.tiktok {
+    background: #000000;
 }
 
-.link-icon.instagram {
+.icon-box.instagram {
     background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366);
 }
 
-.link-icon.facebook {
+.icon-box.facebook {
     background: #0866ff;
 }
 
@@ -370,37 +322,37 @@ body {
 .link-user {
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--white);
+    color: #ffffff;
     letter-spacing: -0.2px;
 }
 
-.link-stats {
+.link-followers {
     font-size: 0.75rem;
     font-weight: 500;
-    color: var(--green-300);
+    color: #6baf5a;
     display: flex;
     align-items: center;
     gap: 4px;
 }
 
-.link-stats i {
+.link-followers i {
     font-size: 0.65rem;
 }
 
 .link-arrow {
-    color: var(--green-300);
+    color: #6baf5a;
     font-size: 0.85rem;
     opacity: 0;
     transform: translateX(-8px);
     transition: all 0.35s ease;
 }
 
-.link-btn:hover .link-arrow {
+.link-item:hover .link-arrow {
     opacity: 1;
     transform: translateX(0);
 }
 
-.stats-section {
+.total-stats {
     text-align: center;
     margin-bottom: 20px;
     padding: 14px;
@@ -409,56 +361,56 @@ body {
     border: 1px solid rgba(107, 175, 90, 0.15);
 }
 
-.stat-item {
+.stats-inner {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
 }
 
-.stat-item i {
-    color: var(--green-300);
+.stats-inner i {
+    color: #6baf5a;
     font-size: 0.9rem;
 }
 
-.stat-item span:first-of-type {
+.stats-inner span:first-of-type {
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--white);
+    color: #ffffff;
 }
 
-.stat-label {
+.stats-text {
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.5);
 }
 
-.footer-section {
+.footer-text {
     text-align: center;
 }
 
-.footer-section p {
+.footer-text p {
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.35);
 }
 
 @media (max-width: 480px) {
-    .main-container {
+    .page-wrapper {
         max-width: 100%;
     }
     
-    .card-inner {
+    .card-content {
         padding: 28px 20px 22px;
     }
     
-    .profile-name {
+    .title {
         font-size: 1.4rem;
     }
     
-    .link-btn {
+    .link-item {
         padding: 12px 14px;
     }
     
-    .link-icon {
+    .icon-box {
         width: 40px;
         height: 40px;
         font-size: 1.1rem;

@@ -1,6 +1,4 @@
 (function() {
-    'use strict';
-
     var followersData = {
         twitter: '4698',
         instagram: '1281',
@@ -10,7 +8,9 @@
     };
 
     function formatNumber(num) {
-        if (!num || num === '0') return '0';
+        if (!num || num === '0') {
+            return '0';
+        }
         var n = parseInt(num, 10);
         if (n >= 1000000) {
             return (n / 1000000).toFixed(1).replace('.0', '') + 'M';
@@ -21,44 +21,47 @@
         return n.toLocaleString('pt-BR');
     }
 
-    function calculateTotalFollowers() {
+    function sumFollowers() {
         var total = 0;
-        Object.keys(followersData).forEach(function(key) {
-            total += parseInt(followersData[key], 10) || 0;
-        });
+        var keys = Object.keys(followersData);
+        for (var i = 0; i < keys.length; i++) {
+            total += parseInt(followersData[keys[i]], 10) || 0;
+        }
         return total;
     }
 
     function updateTotalDisplay() {
-        var totalEl = document.getElementById('totalFollowers');
-        if (totalEl) {
-            totalEl.textContent = formatNumber(calculateTotalFollowers());
+        var el = document.getElementById('totalFollowers');
+        if (el) {
+            el.textContent = formatNumber(sumFollowers());
         }
     }
 
     function createParticles() {
         var container = document.getElementById('particles');
-        if (!container) return;
-        var i, particle;
-        for (i = 0; i < 25; i++) {
-            particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDuration = (Math.random() * 12 + 8) + 's';
-            particle.style.animationDelay = Math.random() * 10 + 's';
-            particle.style.width = (Math.random() * 2 + 1) + 'px';
-            particle.style.height = particle.style.width;
-            container.appendChild(particle);
+        if (!container) {
+            return;
+        }
+        for (var i = 0; i < 25; i++) {
+            var dot = document.createElement('div');
+            dot.className = 'particle-dot';
+            dot.style.left = Math.random() * 100 + '%';
+            dot.style.animationDuration = (Math.random() * 12 + 8) + 's';
+            dot.style.animationDelay = Math.random() * 10 + 's';
+            var size = Math.random() * 2 + 1;
+            dot.style.width = size + 'px';
+            dot.style.height = size + 'px';
+            container.appendChild(dot);
         }
     }
 
-    var socialLinks = [
+    var linksConfig = [
         {
             name: 'Site',
             username: 'ecologica2verde.online',
             url: 'https://ecologica2verde.online/',
             icon: 'fa-globe',
-            iconClass: 'website',
+            styleClass: 'website',
             hasFollowers: false
         },
         {
@@ -66,70 +69,70 @@
             username: '@Ecologica3Verde',
             url: 'https://x.com/Ecologica3Verde',
             icon: 'fa-x-twitter',
-            iconClass: 'twitter',
+            styleClass: 'twitter',
             hasFollowers: true,
-            followersKey: 'twitter'
+            key: 'twitter'
         },
         {
             name: 'Threads',
             username: '@ecologicaverde',
             url: 'https://www.threads.net/@ecologicaverde',
             icon: 'fa-threads',
-            iconClass: 'threads',
+            styleClass: 'threads',
             hasFollowers: true,
-            followersKey: 'threads'
+            key: 'threads'
         },
         {
             name: 'TikTok',
             username: '@ecologica2verde',
             url: 'https://www.tiktok.com/@ecologica2verde',
             icon: 'fa-tiktok',
-            iconClass: 'tiktok',
+            styleClass: 'tiktok',
             hasFollowers: true,
-            followersKey: 'tiktok'
+            key: 'tiktok'
         },
         {
             name: 'Instagram',
             username: '@ecologicaverde',
             url: 'https://www.instagram.com/ecologicaverde',
             icon: 'fa-instagram',
-            iconClass: 'instagram',
+            styleClass: 'instagram',
             hasFollowers: true,
-            followersKey: 'instagram'
+            key: 'instagram'
         },
         {
             name: 'Facebook',
             username: 'ecologica2verde',
             url: 'https://www.facebook.com/ecologica2verde',
             icon: 'fa-facebook-f',
-            iconClass: 'facebook',
+            styleClass: 'facebook',
             hasFollowers: true,
-            followersKey: 'facebook'
+            key: 'facebook'
         }
     ];
 
-    function buildLinkElement(link) {
+    function buildLink(link) {
         var a = document.createElement('a');
         a.href = link.url;
-        a.className = 'link-btn';
+        a.className = 'link-item';
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
 
-        var statsHTML = '';
-        if (link.hasFollowers && followersData[link.followersKey]) {
-            statsHTML = '<span class="link-stats"><i class="fas fa-users"></i> ' + 
-                        formatNumber(followersData[link.followersKey]) + '</span>';
+        var statsHtml = '';
+        if (link.hasFollowers && followersData[link.key]) {
+            statsHtml = '<span class="link-followers"><i class="fas fa-users"></i> ' +
+                        formatNumber(followersData[link.key]) + '</span>';
         }
 
-        a.innerHTML = 
+        a.innerHTML =
             '<div class="link-left">' +
-                '<div class="link-icon ' + link.iconClass + '">' +
+                '<div class="icon-box ' + link.styleClass + '">' +
                     '<i class="fa-brands ' + link.icon + '"></i>' +
                 '</div>' +
                 '<div class="link-info">' +
                     '<span class="link-label">' + link.name + '</span>' +
                     '<span class="link-user">' + link.username + '</span>' +
-                    statsHTML +
+                    statsHtml +
                 '</div>' +
             '</div>' +
             '<i class="fas fa-chevron-right link-arrow"></i>';
@@ -139,20 +142,23 @@
 
     function renderLinks() {
         var container = document.getElementById('linksContainer');
-        if (!container) return;
+        if (!container) {
+            return;
+        }
         container.innerHTML = '';
 
-        socialLinks.forEach(function(link, index) {
-            var el = buildLinkElement(link);
-            el.style.animationDelay = (0.15 + index * 0.08) + 's';
+        for (var i = 0; i < linksConfig.length; i++) {
+            var el = buildLink(linksConfig[i]);
+            el.style.animationDelay = (0.15 + i * 0.08) + 's';
             container.appendChild(el);
-        });
+        }
     }
 
-    function loadFollowersData() {
+    function loadFollowers() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'followers.json', true);
         xhr.timeout = 5000;
+
         xhr.onload = function() {
             if (xhr.status === 200) {
                 try {
@@ -167,20 +173,23 @@
             renderLinks();
             updateTotalDisplay();
         };
+
         xhr.onerror = function() {
             renderLinks();
             updateTotalDisplay();
         };
+
         xhr.ontimeout = function() {
             renderLinks();
             updateTotalDisplay();
         };
+
         xhr.send();
     }
 
     document.addEventListener('DOMContentLoaded', function() {
         createParticles();
         updateTotalDisplay();
-        loadFollowersData();
+        loadFollowers();
     });
 })();
