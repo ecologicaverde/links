@@ -1,41 +1,70 @@
-name: Update Followers Count
+const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 
-on:
-  schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
+const followersFile = path.join(__dirname, 'followers.json');
 
-permissions:
-  contents: write
+let followers = {
+    twitter: '4698',
+    instagram: '1281',
+    threads: '42',
+    tiktok: '146',
+    facebook: '20',
+    discord: '58329',
+    lastUpdated: new Date().toISOString()
+};
 
-jobs:
-  update:
-    runs-on: ubuntu-latest
+async function fetchDiscordMembers() {
+    try {
+        const response = await axios.get('https://discord.com/api/v9/invites/ZPbzpcPwFf?with_counts=true', {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            },
+            timeout: 10000
+        });
+        if (response.data && response.data.approximate_member_count) {
+            return response.data.approximate_member_count.toString();
+        }
+    } catch (error) {
+        console.error('Erro ao buscar Discord via API:', error.message);
+    }
+    return null;
+}
+
+async function updateAllFollowers() {
+    console.log('========================================');
+    console.log('Iniciando atualização de seguidores...');
+    console.log('Data/Hora:', new Date().toLocaleString('pt-BR'));
+    console.log('========================================');
     
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+    console.log('\n📡 Buscando dados do Discord...');
+    const discordMembers = await fetchDiscordMembers();
+    if (discordMembers) {
+        followers.discord = discordMembers;
+        console.log('✅ Discord atualizado:', discordMembers, 'membros');
+    } else {
+        console.log('⚠️ Discord não atualizado, mantendo valor anterior:', followers.discord);
+    }
     
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+    console.log('\n📊 VALORES ATUAIS:');
+    console.log('────────────────────────────────────────');
+    console.log('🐦 Twitter (manual):', followers.twitter);
+    console.log('📸 Instagram (manual):', followers.instagram);
+    console.log('🪡 Threads (manual):', followers.threads);
+    console.log('🎵 TikTok (manual):', followers.tiktok);
+    console.log('📘 Facebook (manual):', followers.facebook);
+    console.log('🎮 Discord (automático):', followers.discord);
+    console.log('────────────────────────────────────────');
     
-    - name: Install dependencies
-      run: npm install
+    followers.lastUpdated = new Date().toISOString();
     
-    - name: Run update script
-      run: node update-followers.js
-    
-    - name: Commit and push if changed
-      run: |
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git config --global user.name "github-actions[bot]"
-        git add followers.json
-        if git diff --quiet && git diff --staged --quiet; then
-          echo "No changes to commit"
-          exit 0
-        fi
-        git commit -m "Update followers count"
-        git push
+    fs.writeFileSync(followersFile, JSON.stringify(followers, null, 2), 'utf8');
+    console.log('\n✅ Arquivo followers.json atualizado com sucesso!');
+    console.log('🕒 Última atualização:', new Date(followers.lastUpdated).toLocaleString('pt-BR'));
+    console.log('========================================');
+}
+
+updateAllFollowers().catch(error => {
+    console.error('❌ Erro durante atualização:', error);
+    process.exit(1);
+});
