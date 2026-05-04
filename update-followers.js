@@ -5,10 +5,10 @@ const path = require('path');
 const followersFile = path.join(__dirname, 'followers.json');
 
 let followers = {
-    twitter: '4698',
-    instagram: '1281',
-    threads: '42',
-    tiktok: '146',
+    twitter: '5078',
+    instagram: '1285',
+    threads: '46',
+    tiktok: '150',
     facebook: '20',
     discord: '58329',
     lastUpdated: new Date().toISOString()
