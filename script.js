@@ -1,11 +1,11 @@
 (function() {
     var followersData = {
-        twitter: '4698',
-        instagram: '1281',
-        threads: '42',
-        tiktok: '146',
-        facebook: '20',
-        discord: '58329'
+        twitter: '5421',
+        instagram: '1291',
+        threads: '48',
+        tiktok: '213',
+        facebook: '21',
+        discord: '58368'
     };
 
     var currentLanguage = 'pt';
