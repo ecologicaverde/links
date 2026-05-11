@@ -5,10 +5,10 @@ const path = require('path');
 const followersFile = path.join(__dirname, 'followers.json');
 
 let followers = {
-    twitter: '5078',
-    instagram: '1285',
-    threads: '46',
-    tiktok: '150',
+    twitter: '4698',
+    instagram: '1281',
+    threads: '42',
+    tiktok: '146',
     facebook: '20',
     discord: '58329',
     lastUpdated: new Date().toISOString()
@@ -33,7 +33,7 @@ async function fetchDiscordMembers() {
 
 async function updateAllFollowers() {
     console.log('========================================');
-    console.log('Iniciando atualização de seguidores...');
+    console.log('Iniciando atualização de membros do Discord...');
     console.log('Data/Hora:', new Date().toLocaleString('pt-BR'));
     console.log('========================================');
     
@@ -57,6 +57,13 @@ async function updateAllFollowers() {
     console.log('────────────────────────────────────────');
     
     followers.lastUpdated = new Date().toISOString();
+    
+    const existingData = JSON.parse(fs.readFileSync(followersFile, 'utf8'));
+    followers.twitter = existingData.twitter || followers.twitter;
+    followers.instagram = existingData.instagram || followers.instagram;
+    followers.threads = existingData.threads || followers.threads;
+    followers.tiktok = existingData.tiktok || followers.tiktok;
+    followers.facebook = existingData.facebook || followers.facebook;
     
     fs.writeFileSync(followersFile, JSON.stringify(followers, null, 2), 'utf8');
     console.log('\n✅ Arquivo followers.json atualizado com sucesso!');
